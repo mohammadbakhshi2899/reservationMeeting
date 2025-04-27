@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مدیریت رزروها</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h1>مدیریت رزروها</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>شناسه</th>
+                <th>تاریخ و ساعت</th>
+                <th>مدت زمان</th>
+                <th>توضیحات</th>
+                <th>عملیات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.start_time }}</td>
+                <td>{{ reservation.duration }} دقیقه</td>
+                <td>{{ reservation.description }}</td>
+                <td>
+                    <button onclick="deleteReservation({{ reservation.id }})">حذف</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        async function deleteReservation(id) {
+            if (confirm('آیا مطمئن هستید که می‌خواهید این رزرو را حذف کنید؟')) {
+                try {
+                    const response = await fetch(`/admin/reservations/${id}`, {
+                        method: 'DELETE'
+                    });
+
+                    if (response.ok) {
+                        alert('رزرو با موفقیت حذف شد.');
+                        window.location.reload();
+                    } else {
+                        const errorData = await response.json();
+                        alert(errorData.detail || 'خطا در حذف رزرو.');
+                    }
+                } catch (error) {
+                    alert('خطا در ارتباط با سرور.');
+                }
+            }
+        }
+    </script>
+</body>
+</html>

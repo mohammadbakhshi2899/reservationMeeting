@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ویرایش جلسه</title>
+    <!-- لینک فونت Vazirmatn -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- لینک Font Awesome برای آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- لینک PersianDatePicker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+    <!-- استایل‌های سفارشی -->
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            direction: rtl;
+        }
+        .container h1 {
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        .calendar-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 18px;
+            pointer-events: none;
+        }
+        .calendar-icon input {
+            padding-left: 45px; /* فضا برای آیکون */
+        }
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        /* ریسپانسیو */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>ویرایش جلسه</h1>
+        <form method="post" action="/admin/edit/{{ session[0] }}">
+            <div class="form-group calendar-icon">
+                <label for="date">تاریخ:</label>
+                <i class="fas fa-calendar-alt"></i> <!-- آیکون تقویم -->
+                <input type="text" id="date" name="date" value="{{ session[1] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="room_number">شماره اتاق جلسه:</label>
+                <select id="room_number" name="room_number" required>
+                    <option value="اتاق شماره یک">{% if session[4] == "1" %} selected{% endif %}اتاق شماره یک</option>
+                    <option value="اتاق شاره دو">{% if session[4] == "2" %} selected{% endif %}اتاق شاره دو</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="time">ساعت شروع:</label>
+                <select id="time" name="time" required>
+                    <option value="08:00" {% if session[2] == "08:00" %}selected{% endif %}>8:00</option>
+                    <option value="08:30" {% if session[2] == "08:30" %}selected{% endif %}>8:30</option>
+                    <option value="09:00" {% if session[2] == "09:00" %}selected{% endif %}>9:00</option>
+                    <option value="09:30" {% if session[2] == "09:30" %}selected{% endif %}>9:30</option>
+                    <option value="10:00" {% if session[2] == "10:00" %}selected{% endif %}>10:00</option>
+                    <option value="10:30" {% if session[2] == "10:30" %}selected{% endif %}>10:30</option>
+                    <option value="11:00" {% if session[2] == "11:00" %}selected{% endif %}>11:00</option>
+                    <option value="11:30" {% if session[2] == "11:30" %}selected{% endif %}>11:30</option>
+                    <option value="12:00" {% if session[2] == "12:00" %}selected{% endif %}>12:00</option>
+                    <option value="12:30" {% if session[2] == "12:30" %}selected{% endif %}>12:30</option>
+                    <option value="13:00" {% if session[2] == "13:00" %}selected{% endif %}>13:00</option>
+                    <option value="13:30" {% if session[2] == "13:30" %}selected{% endif %}>13:30</option>
+                    <option value="14:00" {% if session[2] == "14:00" %}selected{% endif %}>14:00</option>
+                    <option value="16:00" {% if session[2] == "16:00" %}selected{% endif %}>16:00</option>
+                    <option value="16:30" {% if session[2] == "16:30" %}selected{% endif %}>16:30</option>
+                    <option value="17:00" {% if session[2] == "17:00" %}selected{% endif %}>17:00</option>
+                    <option value="17:30" {% if session[2] == "17:30" %}selected{% endif %}>17:30</option>
+                    <option value="18:00" {% if session[2] == "18:00" %}selected{% endif %}>18:00</option>
+                    <option value="18:30" {% if session[2] == "18:30" %}selected{% endif %}>18:30</option>
+                    <option value="19:00" {% if session[2] == "19:00" %}selected{% endif %}>19:00</option>
+                    <option value="19:30" {% if session[2] == "19:30" %}selected{% endif %}>19:30</option>
+                    <option value="20:00" {% if session[2] == "20:00" %}selected{% endif %}>20:00</option>
+                    <option value="20:30" {% if session[2] == "20:30" %}selected{% endif %}>20:30</option>
+                    <option value="21:00" {% if session[2] == "21:00" %}selected{% endif %}>21:00</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="duration">مدت زمان جلسه:</label>
+                <select id="duration" name="duration" required>
+                        <option value="30"{% if session[3]==30 %}selected{% endif %}>30 دقیقه</option>
+                        <option value="60" {% if session[3]==60 %}selected{% endif %}>1 ساعت</option>
+                        <option value="90" {% if session[3]==90 %}selected{% endif %}>1.5 ساعت</option>
+                        <option value="120" {% if session[3]==120 %}selected{% endif %}>2 ساعت</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="owner_name">نام مالک:</label>
+
+                <input type="text" id="owner_name" name="owner_name" value="{{ session[8] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="owner_phone">شماره مالک:</label>
+                <input type="text" maxlength="11" minlength="10" id="owner_phone" name="owner_phone" value="{{ session[9] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="buyer_name">نام خریدار:</label>
+                <input type="text" id="buyer_name" name="buyer_name" value="{{ session[7] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="buyer_phone">شماره خریدار:</label>
+                <input type="text" maxlength="11" minlength="10" id="buyer_phone" name="buyer_phone" value="{{ session[6] }}" required>
+            </div>
+            <div class="form-group">
+                <label for="description">توضیحات:</label>
+                <textarea id="description" name="description" rows="4">{{ session[10] }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="consultant_name">نام مشاور:</label>
+                <input type="text" id="consultant_name" name="consultant_name" value="{{ session[7] }}" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">ذخیره تغییرات</button>
+            </div>
+        </form>
+
+        <!-- JavaScript برای فعال کردن تقویم شمسی -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+        <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#date").pDatepicker({
+                    format: "YYYY/MM/DD",
+                    autoClose: true,
+                    initialValue: false
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

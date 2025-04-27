@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رزرو اتاق جلسه</title>
+    <!-- لینک فونت Vazirmatn -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- لینک Font Awesome برای آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- لینک PersianDatePicker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
+    <!-- استایل‌های سفارشی -->
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .reserve-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            direction: rtl;
+        }
+        .reserve-container h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 24px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+            background-color: #fff;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        .calendar-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #aaa;
+            font-size: 18px;
+            pointer-events: none;
+        }
+        .calendar-icon input {
+            padding-left: 45px; /* فضا برای آیکون */
+        }
+        .form-group button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+        /* ریسپانسیو */
+        @media (max-width: 600px) {
+            .reserve-container {
+                padding: 20px;
+            }
+            .form-group input, .form-group select, .form-group textarea {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="reserve-container">
+        <h2>رزرو اتاق جلسه</h2>
+        <form method="post" action="/reserve">
+            <!-- تاریخ -->
+            <div class="form-group calendar-icon">
+                <label for="date">تاریخ:</label>
+                <i class="fas fa-calendar-alt"></i> <!-- آیکون تقویم -->
+                <input type="text" id="date" name="date" required>
+            </div>
+
+            <!-- شماره اتاق جلسه -->
+            <div class="form-group">
+                <label for="room_number">شماره اتاق جلسه:</label>
+                <select id="room_number" name="room_number" required>
+                    <option value="1">اتاق شماره یک</option>
+                    <option value="2">اتاق شماره دو</option>
+                </select>
+            </div>
+
+            <!-- ساعت شروع -->
+            <div class="form-group">
+                <label for="time">ساعت شروع:</label>
+                <select id="time" name="time" required>
+                    <!-- بازه 8:00 تا 14:00 -->
+                    <option value="08:00">8:00</option>
+                    <option value="08:30">8:30</option>
+                    <option value="09:00">9:00</option>
+                    <option value="09:30">9:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+
+                    <!-- بازه 16:00 تا 21:00 -->
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                </select>
+            </div>
+
+            <!-- مدت زمان جلسه -->
+            <div class="form-group">
+                <label for="duration">مدت زمان جلسه:</label>
+                <select id="duration" name="duration" required>
+                    <option value="30">30 دقیقه</option>
+                    <option value="60">1 ساعت</option>
+                    <option value="90">1.5 ساعت</option>
+                    <option value="120">2 ساعت</option>
+                </select>
+            </div>
+
+            <!-- نام مالک -->
+            <div class="form-group">
+                <label for="owner_name">نام مالک:</label>
+                <input type="text" id="owner_name" name="owner_name" required>
+            </div>
+
+            <!-- شماره مالک -->
+            <div class="form-group">
+                <label for="owner_phone">شماره مالک:</label>
+                <input type="text" maxlength="11" minlength="10" id="owner_phone" name="owner_phone" required>
+            </div>
+
+            <!-- نام خریدار -->
+            <div class="form-group">
+                <label for="buyer">نام خریدار:</label>
+                <input type="text" id="buyer" name="buyer" required>
+            </div>
+
+            <!-- شماره تماس خریدار -->
+            <div class="form-group">
+                <label for="buyer_phone">شماره تماس خریدار:</label>
+                <input type="text" maxlength="11" minlength="10" id="buyer_phone" name="buyer_phone" required>
+            </div>
+
+            <!-- توضیحات -->
+            <div class="form-group">
+                <label for="description">توضیحات:</label>
+                <textarea id="description" name="description" rows="4"></textarea>
+            </div>
+
+            <!-- نام مشاور -->
+            <div class="form-group">
+                <label for="consultant_name">نام مشاور:</label>
+                <select id="consultant_name" name="consultant_name" required>
+                    <option value="6">محسن قاسمی</option>
+                    <option value="7">هادی شهرکی</option>
+                    <option value="8">محمد پیله ور</option>
+                    <option value="9">میلاد پیری</option>
+                    <option value="10">محمود عباسی</option>
+                    <option value="11">مهدی سرگزی</option>
+                    <option value="12">جواد دسترس</option>
+                    <option value="13">آرمان ملاشاهی</option>
+                    <option value="14">سهیل جلالی</option>
+                    <option value="15">عرفان شاقوزایی</option>
+                    <option value="16">ایلیا مرادقلی</option>
+                    <option value="17">عرفان ذکری</option>
+                    <option value="18">یوسف ریگی</option>
+                    <option value="19">امیر جهانتیغ</option>
+                </select>
+            </div>
+
+            <!-- دکمه ثبت رزرو -->
+            <div class="form-group">
+                <button type="submit">ثبت رزرو</button>
+            </div>
+        </form>
+
+        <!-- JavaScript برای فعال کردن تقویم شمسی -->
+        <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+        <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#date").pDatepicker({
+                    format: "YYYY/MM/DD",
+                    autoClose: true,
+                    initialValue: false
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

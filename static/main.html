@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صفحه اصلی - Venus Zahedan</title>
+    <!-- لینک فونت Vazirmatn -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- لینک Font Awesome برای آیکون‌ها -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- استایل‌های سفارشی -->
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f9fafb;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        header h1 {
+            font-size: 28px;
+            margin: 0;
+        }
+        header p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+            direction: rtl;
+        }
+        .section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .section h2 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+        .section p {
+            color: #555;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .section a {
+            display: inline-block;
+            padding: 12px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .section a:hover {
+            background-color: #0056b3;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+        footer p {
+            margin: 0;
+            font-size: 14px;
+        }
+        /* ریسپانسیو */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 24px;
+            }
+            header p {
+                font-size: 14px;
+            }
+            .section h2 {
+                font-size: 20px;
+            }
+            .section p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- هدر صفحه -->
+    <header>
+        <h1>Venus Zahedan</h1>
+        <p></p>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <div class="container">
+        <!-- بخش رزرو -->
+        <div class="section">
+            <h2><i class="fas fa-calendar-alt"></i> رزرو جلسه</h2>
+            <p>برای رزرو جلسه مشاوره، روی دکمه زیر کلیک کنید:</p>
+            <a href="/reserve">رزرو جلسه</a>
+        </div>
+
+        <!-- بخش پنل مدیریت -->
+        <div class="section">
+            <h2><i class="fas fa-user-shield"></i> پنل مدیریت</h2>
+            <p>مدیران می‌توانند از طریق دکمه زیر به پنل مدیریت دسترسی داشته باشند:</p>
+            <a href="/login">ورود به پنل مدیریت</a>
+        </div>
+
+        <!-- بخش اطلاعات تماس -->
+        <div class="section">
+            <h2><i class="fas fa-info-circle"></i> درباره ما</h2>
+            <p>ما در خدمت شما هستیم. برای اطلاعات بیشتر به وب‌سایت ما مراجعه کنید:</p>
+            <a href="https://venuszahedan.com" target="_blank">venuszahedan.com</a>
+        </div>
+    </div>
+
+    <!-- فوتر صفحه -->
+    <footer>
+        <p>&copy; 2023 Venus Zahedan. تمام حقوق محفوظ است.</p>
+    </footer>
+</body>
+</html>
