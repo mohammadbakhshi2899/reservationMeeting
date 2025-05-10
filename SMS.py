@@ -24,7 +24,7 @@ def sending(recipients, message):
 
 
 def sendClientsMessage(buyer = "محمد", buyer_phone = "09212242785", date = "jome" , time = "saat 6"):
-    message =f"جناب آقا / سرکار خانم {buyer} ضمن عرض خوش امد گویی از شما برای برگزاری جلسه برسی یا انقعاد قرار داد شما دعوت به عمل می اوریم تا در تاریخ  {date} در ساعت  {time} به دفتر واقع در خیابان معلم روبه روی شیرینی سرای مجلسی حضور به عمل اورید"
+    message =f"جناب آقا / سرکار خانم {buyer} ضمن عرض خوش امد گویی از شما برای برگزاری جلسه برسی یا انعقاد قرار داد شما دعوت به عمل می اوریم تا در تاریخ  {date} در ساعت  {time} به دفتر کارگزاری املاک ونوس واقع در خیابان معلم روبه روی شیرینی سرای مجلسی حضور به عمل اورید"
     sending([[buyer_phone]], message)
 
 
@@ -34,7 +34,7 @@ def sendOthersMessage(cons=7, date="jome", time="saat 6"):
     for other in others:
         recipients.append(other[4])
     recipients.append(DBMS.get_consultant_phone(cons))
-    message =f"جلسه ای در تاریخ {date} ساعت {time} ثبت گردید حضور شما در این جلسه الزامیست لطفا در دفتر در زملن مشخص شده حضور به عمل آورید"
+    message =f"جلسه ای در تاریخ {date} ساعت {time} ثبت گردید حضور شما در این جلسه الزامیست لطفا در دفتر در زمان مشخص شده حضور به عمل آورید"
     sending([recipients], message)
 
 def sendMessages(buyer, buyer_phone, customer, customer_phone, date, time, consultant):
