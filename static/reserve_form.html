@@ -15,10 +15,10 @@
         body {
             font-family: 'Vazirmatn', sans-serif;
             background-color: #f9fafb;
-            display: flex9
-            justify-content: center;
-            align-items: center;
-            height: 180vh;
+            display: flex;
+            justify-content: center; /* وسط قرارگیری افقی */
+            align-items: center; /* وسط قرارگیری عمودی */
+            height: 150vh; /* ارتفاع صفحه */
             margin: 0;
         }
         .reserve-container {
@@ -27,8 +27,9 @@
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             width: 100%;
-            max-width: 500px;
+            max-width: 500px; /* حداکثر عرض فرم */
             direction: rtl;
+            margin: 0 auto; /* وسط قرارگیری در صفحه */
         }
         .reserve-container h2 {
             text-align: center;
@@ -87,7 +88,6 @@
         .form-group button:hover {
             background-color: #0056b3;
         }
-
         /* چیدمان دو ستونی برای موبایل */
         @media (max-width: 600px) {
             .reserve-container {
@@ -126,7 +126,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- ساعت شروع و مدت زمان -->
             <div class="form-row">
                 <div class="form-group">
@@ -146,7 +145,6 @@
                         <option value="13:00">13:00</option>
                         <option value="13:30">13:30</option>
                         <option value="14:00">14:00</option>
-
                         <!-- بازه 16:00 تا 21:00 -->
                         <option value="16:00">16:00</option>
                         <option value="16:30">16:30</option>
@@ -171,7 +169,6 @@
                     </select>
                 </div>
             </div>
-
             <!-- نام مالک و شماره مالک -->
             <div class="form-row">
                 <div class="form-group">
@@ -183,7 +180,6 @@
                     <input type="text" maxlength="11" minlength="10" id="owner_phone" name="owner_phone" required>
                 </div>
             </div>
-
             <!-- نام خریدار و شماره تماس خریدار -->
             <div class="form-row">
                 <div class="form-group">
@@ -195,13 +191,11 @@
                     <input type="text" maxlength="11" minlength="10" id="buyer_phone" name="buyer_phone" required>
                 </div>
             </div>
-
             <!-- توضیحات -->
             <div class="form-group">
                 <label for="description">توضیحات:</label>
                 <textarea id="description" name="description" rows="4"></textarea>
             </div>
-
             <!-- نام مشاور -->
             <div class="form-group">
                 <label for="consultant_name">نام مشاور:</label>
@@ -231,13 +225,11 @@
                     <option value="29">احمدرضا ابراهیمی</option>
                 </select>
             </div>
-
             <!-- دکمه ثبت رزرو -->
             <div class="form-group">
                 <button type="submit">ثبت رزرو</button>
             </div>
         </form>
-
         <!-- JavaScript برای فعال کردن تقویم شمسی -->
         <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
         <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
