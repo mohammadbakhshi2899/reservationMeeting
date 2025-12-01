@@ -126,7 +126,7 @@ async def reserve(
         room_number = 2
     if not DBMS.is_time_slot_available(date, room_number, time, duration):
         return  RedirectResponse(url="/reserve/failed", status_code=status.HTTP_303_SEE_OTHER)
-    print(consultant_name)
+
     DBMS.set_reservation(date, time, duration, owner_name, owner_phone, description, consultant_name, buyer, buyer_phone, room_number, consultants_id)
     SMS.sendMessages(buyer, buyer_phone,owner_name, owner_phone,date, time,  consultants_id)
 
