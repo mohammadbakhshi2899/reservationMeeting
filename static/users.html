@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مشاهده لیست کاربران</title>
+    <!-- لینک فونت Vazirmatn -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+    <!-- استایل‌های سفارشی -->
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f9fafb;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table th, table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table th {
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .edit-btn {
+            background-color: #007bff;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+        }
+        /* مودال ویرایش */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+        }
+        .modal input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>لیست کاربران</h2>
+        <table id="users-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>نام</th>
+                    <th>نام خانوادگی</th>
+                    <th>شماره تماس</th>
+                    <th>عملیات</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- اطلاعات کاربران به صورت پویا اضافه می‌شوند -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- مودال ویرایش -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h3>ویرایش کاربر</h3>
+            <input type="hidden" id="edit-user-id">
+            <input type="text" id="edit-name" placeholder="نام">
+            <input type="text" id="edit-family" placeholder="نام خانوادگی">
+            <input type="text" id="edit-phone" placeholder="شماره تماس">
+            <button id="save-edit">ذخیره تغییرات</button>
+            <button id="close-modal">لغو</button>
+        </div>
+    </div>
+
+    <script>
+        // دریافت لیست کاربران از API
+        async function fetchUsers() {
+            try {
+                const response = await fetch("/users");
+                if (!response.ok) {
+                    throw new Error("خطا در دریافت اطلاعات کاربران");
+                }
+                const users = await response.json();
+                populateTable(users);
+            } catch (error) {
+                console.error("خطا:", error);
+                alert("خطا در بارگذاری اطلاعات کاربران");
+            }
+        }
+
+        // پر کردن جدول با اطلاعات کاربران
+        function populateTable(users) {
+            const tbody = document.querySelector("#users-table tbody");
+            tbody.innerHTML = ""; // پاک کردن محتوای قبلی
+            users.forEach(user => {
+                const row = document.createElement("tr");
+
+                // ستون‌های جدول
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.family}</td>
+                    <td>${user.phone}</td>
+                    <td>
+                        <button class="edit-btn" onclick="openEditModal(${user.id}, '${user.name}', '${user.family}', '${user.phone}')">ویرایش</button>
+                        <button class="delete-btn" onclick="deleteUser(${user.id})">حذف</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // باز کردن مودال ویرایش
+        function openEditModal(id, name, family, phone) {
+            document.getElementById("edit-user-id").value = id;
+            document.getElementById("edit-name").value = name;
+            document.getElementById("edit-family").value = family;
+            document.getElementById("edit-phone").value = phone;
+            document.getElementById("edit-modal").style.display = "flex";
+        }
+
+        // بستن مودال ویرایش
+        document.getElementById("close-modal").addEventListener("click", () => {
+            document.getElementById("edit-modal").style.display = "none";
+        });
+
+        // ذخیره تغییرات ویرایش
+        document.getElementById("save-edit").addEventListener("click", async () => {
+            const id = document.getElementById("edit-user-id").value;
+            const name = document.getElementById("edit-name").value;
+            const family = document.getElementById("edit-family").value;
+            const phone = document.getElementById("edit-phone").value;
+
+            try {
+                const response = await fetch(`/users/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: parseInt(id), name, family, phone }),
+                });
+                if (!response.ok) {
+                    throw new Error("خطا در ویرایش کاربر");
+                }
+                alert("کاربر با موفقیت ویرایش شد");
+                document.getElementById("edit-modal").style.display = "none";
+                fetchUsers(); // به‌روزرسانی جدول
+            } catch (error) {
+                console.error("خطا:", error);
+                alert("خطا در ویرایش کاربر");
+            }
+        });
+
+        // حذف کاربر
+        async function deleteUser(id) {
+            if (!confirm("آیا مطمئن هستید که می‌خواهید این کاربر را حذف کنید؟")) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/users/${id}`, { method: "DELETE" });
+                if (!response.ok) {
+                    throw new Error("خطا در حذف کاربر");
+                }
+                alert("کاربر با موفقیت حذف شد");
+                fetchUsers(); // به‌روزرسانی جدول
+            } catch (error) {
+                console.error("خطا:", error);
+                alert("خطا در حذف کاربر");
+            }
+        }
+
+        // بارگذاری اولیه لیست کاربران
+        fetchUsers();
+    </script>
+</body>
+</html>

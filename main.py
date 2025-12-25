@@ -31,6 +31,8 @@ fake_admin_db = {
     }
 }
 
+
+
 # ایجاد توکن JWT
 def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode = data.copy()
@@ -100,11 +102,51 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
     response.set_cookie(key="access_token", value=f"Bearer {access_token}", httponly=True)
     return response
 
+def convert_to_dict(cons, item=None):
+    dic = []
+    for item in cons:
+        dic.append({"id": item[0], "first_name": item[1], "last_name": item[2]})
+
+    return dic
+
 @app.get("/reserve", response_class=HTMLResponse)
 async def reserve_page(request: Request):
+    return templates.TemplateResponse("reserve_form.html", {"request": request})
+@app.get("/consultants")
+async def get_consultants():
     consultants = DBMS.get_all_consultants()
-    return templates.TemplateResponse("reserve_form.html", {"request": request, "consultant" : consultants})
+    consultants = convert_to_dict(consultants)
+    return consultants
 
+@app.get("/admin/view/users")
+async def view_users(request: Request):
+    return templates.TemplateResponse("users.html", {"request": request})
+@app.get("/users")
+async def get_users():
+    consultants = DBMS.get_all_users()
+    con = []
+    for consult in consultants:
+        con.append({"id": consult[0], "name": consult[1], "family": consult[2], "phone": consult[3]})
+    return con
+
+@app.delete("/users/{user_id}")
+async def delete_user(user_id: int):
+    DBMS.delete_user(user_id)
+    return {"message": "کاربر با موفقیت حذف شد"}
+
+# Endpoint برای ویرایش کاربر
+class User(BaseModel):
+    id: int
+    name: str
+    family: str
+    phone: str
+@app.put("/users/{user_id}")
+async def update_user(user_id: int,updated_user: User):
+    print(updated_user)
+    # consultants = DBMS.get_all_consultants()
+    DBMS.update_user(user_id, consultant_phone=updated_user.phone, consultant_family=updated_user.family, consultant_name=updated_user.name)
+    return updated_user
+    return {"message": "کاربر با موفقیت ویرایش شد"}
 @app.post("/reserve")
 async def reserve(
         date: str = Form(...),

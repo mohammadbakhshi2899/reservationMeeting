@@ -197,35 +197,43 @@
                 <textarea id="description" name="description" rows="4"></textarea>
             </div>
             <!-- نام مشاور -->
+<!--            <div class="form-group">-->
+<!--                <label for="consultant_name">نام مشاور:</label>-->
+<!--                <select id="consultant_name" name="consultant_name" required>-->
+<!--                    <option value="6">محسن قاسمی</option>-->
+<!--                    <option value="7">هادی شهرکی</option>-->
+<!--                    <option value="8">محمد پیله ور</option>-->
+<!--                    <option value="9">میلاد پیری</option>-->
+<!--                    <option value="10">محمود عباسی</option>-->
+<!--                    <option value="11">مهدی سرگزی</option>-->
+<!--                    <option value="13">آرمان ملاشاهی</option>-->
+<!--                    <option value="15">عرفان شاقوزایی</option>-->
+<!--                    <option value="16">ایلیا مرادقلی</option>-->
+<!--                    <option value="17">عرفان ذکری</option>-->
+<!--                    <option value="19">امیر جهانتیغ</option>-->
+<!--                    <option value="23">سید سعید حسینی</option>-->
+<!--                    <option value="26">علیرضا پیله ور</option>-->
+<!--                    <option value="28">احسان کرد</option>-->
+<!--                    <option value="27">مرتضی کرد</option>-->
+<!--                    <option value="29">جواد حیدری</option>-->
+<!--                    <option value="32">سروش محمودی</option>-->
+<!--                    <option value="33">بهنام طاهری</option>-->
+<!--                    <option value="34">ارشیا زیرک</option>-->
+<!--                    <option value="32">احمد کوهبان</option>-->
+<!--                    <option value="37">فرشاد ملاشاهی</option>-->
+<!--                    <option value="1">مدیریت شرکت</option>-->
+
+<!--                </select>-->
+<!--            </div>-->
+             <!-- نام مشاور -->
             <div class="form-group">
                 <label for="consultant_name">نام مشاور:</label>
                 <select id="consultant_name" name="consultant_name" required>
-                    <option value="6">محسن قاسمی</option>
-                    <option value="7">هادی شهرکی</option>
-                    <option value="8">محمد پیله ور</option>
-                    <option value="9">میلاد پیری</option>
-                    <option value="10">محمود عباسی</option>
-                    <option value="11">مهدی سرگزی</option>
-                    <option value="13">آرمان ملاشاهی</option>
-                    <option value="15">عرفان شاقوزایی</option>
-                    <option value="16">ایلیا مرادقلی</option>
-                    <option value="17">عرفان ذکری</option>
-                    <option value="19">امیر جهانتیغ</option>
-                    <option value="23">سید سعید حسینی</option>
-                    <option value="26">علیرضا پیله ور</option>
-                    <option value="28">احسان کرد</option>
-                    <option value="27">مرتضی کرد</option>
-                    <option value="29">جواد حیدری</option>
-                    <option value="32">سروش محمودی</option>
-                    <option value="33">بهنام طاهری</option>
-                    <option value="34">ارشیا زیرک</option>
-                    <option value="32">احمد کوهبان</option>
-                    <option value="37">فرشاد ملاشاهی</option>
+                    <!-- اطلاعات مشاوران به صورت پویا اضافه می‌شوند -->
                     <option value="1">مدیریت شرکت</option>
-
                 </select>
             </div>
-            <!-- دکمه ثبت رزرو -->
+             دکمه ثبت رزرو
             <div class="form-group">
                 <button type="submit">ثبت رزرو</button>
             </div>
@@ -241,6 +249,28 @@
                     autoClose: true,
                     initialValue: false
                 });
+                 fetch("/consultants")
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("خطا در دریافت اطلاعات مشاوران");
+                        }
+                        return response.json();
+                    })
+                    .then(consultants => {
+                        const consultantSelect = document.getElementById("consultant_name");
+                        // پر کردن <select> با اطلاعات مشاوران
+                        consultants.forEach(consultant => {
+                            const option = document.createElement("option");
+                            option.value = consultant.id; // ID مشاور
+                            option.textContent = `${consultant.first_name} ${consultant.last_name}`;
+                            consultantSelect.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error("خطا:", error);
+                        alert("خطا در بارگذاری اطلاعات مشاوران");
+                    });
+
             });
         </script>
     </div>

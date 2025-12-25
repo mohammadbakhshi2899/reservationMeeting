@@ -92,11 +92,29 @@
                 justify-content: space-between;
             }
         }
+                .manage-users-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.manage-users-btn:hover {
+    background-color: #0056b3;
+}
     </style>
 </head>
 <body>
     <div class="dashboard-container">
+        <!-- دکمه مدیریت کاربران -->
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="/admin/view/users" class="manage-users-btn">مدیریت کاربران</a>
+    </div>
         <h1>داشبورد مدیر</h1>
+
         {% if reservations %}
             {% for i, reservation in reservations %}
             <div class="session-item">

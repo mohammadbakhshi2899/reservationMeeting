@@ -198,7 +198,10 @@ def get_all_consultants():
     cursor.execute("SELECT id ,name, family FROM Users where role == 'مشاور'")
     consultants = cursor.fetchall()
     return consultants
-
+def get_all_users():
+    cursor.execute("SELECT id ,name, family, phone FROM Users")
+    users = cursor.fetchall()
+    return users
 def get_consultant(consultant_id):
     cursor.execute("SELECT * FROM users WHERE id = ?", (consultant_id,))
     consultant = cursor.fetchone()
@@ -221,3 +224,9 @@ def get_consultant_phone(consultant_id):
         return None
     return consultant[4]
 
+def update_user(consultant_id,consultant_phone, consultant_name, consultant_family):
+    cursor.execute("UPDATE Users SET name = ?,  family = ?, phone = ? WHERE id = ?", (consultant_name, consultant_family, consultant_phone, consultant_id))
+
+def delete_user(consultant_id):
+    cursor.execute("DELETE FROM users WHERE id = ?", (consultant_id,))
+    conn.commit()

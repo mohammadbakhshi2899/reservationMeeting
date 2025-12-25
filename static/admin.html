@@ -39,20 +39,36 @@
         button:hover {
             background-color: #c82333;
         }
+        .manage-users-btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.manage-users-btn:hover {
+    background-color: #0056b3;
+}
     </style>
 </head>
 <body>
+    <div class="reserve-container">
+    <!-- دکمه مدیریت کاربران -->
+    <div style="text-align: left; margin-bottom: 20px;">
+        <a href="/admin/view/users" class="manage-users-btn">مدیریت کاربران</a>
+    </div>
+
+    <h2>رزرو اتاق جلسه</h2>
+    <form method="post" action="/reserve">
+        <!-- محتوای فرم بدون تغییر -->
+    </form>
+</div>
     <h1>مدیریت رزروها</h1>
     <table>
-        <thead>
-            <tr>
-                <th>شناسه</th>
-                <th>تاریخ و ساعت</th>
-                <th>مدت زمان</th>
-                <th>توضیحات</th>
-                <th>عملیات</th>
-            </tr>
-        </thead>
+
         <tbody>
             {% for reservation in reservations %}
             <tr>
